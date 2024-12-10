@@ -1,0 +1,155 @@
+Microsoft Windows [Version 10.0.19043.1586]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\Robin>ibmcloud login -a cloud.ibm.com -r eu-de -g Default
+API endpoint: https://cloud.ibm.com
+
+Email> robintyagi00000007@gmail.com
+
+Password>
+Authenticating...
+OK
+
+Targeted account Robin Tyagi's Account (45cc6a2a08ae4001aa0a6c31b327e6cc)
+
+Targeted resource group Default
+
+Targeted region eu-de
+
+
+API endpoint:      https://cloud.ibm.com
+Region:            eu-de
+User:              robintyagi00000007@gmail.com
+Account:           Robin Tyagi's Account (45cc6a2a08ae4001aa0a6c31b327e6cc)
+Resource group:    Default
+CF API endpoint:
+Org:
+Space:
+
+C:\Users\Robin>ibmcloud plugin install container-service
+Looking up 'container-service' from repository 'IBM Cloud'...
+Plug-in 'container-service[kubernetes-service] 1.0.394' found in repository 'IBM Cloud'
+Plug-in 'container-service[kubernetes-service] 1.0.223' was already installed. Do you want to update it with 'container-service[kubernetes-service] 1.0.394' or not? [y/N] > y
+Attempting to download the binary file...
+ 26.97 MiB / 26.97 MiB [===================================================================================] 100.00% 5s
+28279808 bytes downloaded
+Installing binary...
+OK
+Plug-in 'container-service 1.0.394' was successfully installed into C:\Users\Robin\.bluemix\plugins\container-service. Use 'ibmcloud plugin show container-service' to show its details.
+
+C:\Users\Robin>ibmcloud plugin install container-registry
+Looking up 'container-registry' from repository 'IBM Cloud'...
+Plug-in 'container-registry 0.1.566' found in repository 'IBM Cloud'
+Plug-in 'container-registry 0.1.514' was already installed. Do you want to update it with 'container-registry 0.1.566' or not? [y/N] > y
+Attempting to download the binary file...
+ 11.48 MiB / 11.48 MiB [===================================================================================] 100.00% 3s
+12039168 bytes downloaded
+Installing binary...
+OK
+Plug-in 'container-registry 0.1.566' was successfully installed into C:\Users\Robin\.bluemix\plugins\container-registry. Use 'ibmcloud plugin show container-registry' to show its details.
+
+C:\Users\Robin>ibmcloud ks cluster config --cluster c97vejof07lhm51188v0
+OK
+The configuration for c97vejof07lhm51188v0 was downloaded successfully.
+
+Added context for c97vejof07lhm51188v0 to the current kubeconfig file.
+You can now execute 'kubectl' commands against your cluster. For example, run 'kubectl get nodes'.
+If you are accessing the cluster for the first time, 'kubectl' commands might fail for a few seconds while RBAC synchronizes.
+
+C:\Users\Robin>kubectl config current-context
+mycluster-free/c97vejof07lhm51188v0
+
+C:\Users\Robin>ibmcloud cr namespace-add ramannamespace
+Adding namespace 'ramannamespace' in resource group 'Default' for account Robin Tyagi's Account in registry de.icr.io...
+
+Successfully added namespace 'ramannamespace'
+
+OK
+
+C:\Users\Robin>ibmcloud cr login
+Logging 'docker' in to 'de.icr.io'...
+Logged in to 'de.icr.io'.
+
+OK
+
+C:\Users\Robin>ibmcloud cr namespace-list
+Listing namespaces for account 'Robin Tyagi's Account' in registry 'de.icr.io'...
+
+Namespace
+ramannamespace
+
+OK
+
+C:\Users\Robin>docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+softimage           1.0                 bbeae6aa65ac        9 hours ago         93.6MB
+ibmimage            1.0                 2379484c5fae        9 hours ago         89.5MB
+ramanimage1         1.0                 9a93bf03314d        2 weeks ago         93.6MB
+ramanimage          1.0                 60b183fd61dc        2 weeks ago         89.5MB
+srmuimage           1.0                 667e0df829d2        3 months ago        91.2MB
+node                12-alpine           106bb94759ad        3 months ago        89.5MB
+
+C:\Users\Robin>docker tag softimage:1.0 de.icr.io/ramannamespace/newsoftimage:1.0
+
+C:\Users\Robin>docker push de.icr.io/ramannamespace/newsoftimage:1.0
+The push refers to repository [de.icr.io/ramannamespace/newsoftimage]
+1784a2c86f69: Pushed
+93cc7283ee7f: Pushed
+74ead1513ae1: Pushed
+7d2d80309603: Pushed
+c99dbbb91c1e: Pushed
+743fabfe0b03: Pushed
+529f2cda666c: Pushed
+1a058d5342cc: Pushed
+1.0: digest: sha256:ac69bffc6f41072434a23cfc807db3253338fc737ffb4be552ac8c51c1777f42 size: 1994
+
+C:\Users\Robin>ibmcloud cr image-list
+Listing images...
+
+Repository                              Tag   Digest         Namespace        Created       Size    Security status
+de.icr.io/ramannamespace/newsoftimage   1.0   ac69bffc6f41   ramannamespace   8 hours ago   32 MB   Scanning...
+
+OK
+
+C:\Users\Robin>cd Desktop
+
+C:\Users\Robin\Desktop>cd raman
+
+C:\Users\Robin\Desktop\raman>kubectl apply -f ./robydeployment.yaml
+deployment.apps/gnuraman-deploy created
+
+C:\Users\Robin\Desktop\raman>kubectl apply -f ./robyservice.yaml
+service/gnuraman-service created
+
+C:\Users\Robin\Desktop\raman>kubectl get deployments
+NAME              READY   UP-TO-DATE   AVAILABLE   AGE
+gnuraman-deploy   3/3     3            3           50s
+
+C:\Users\Robin\Desktop\raman>kubectl get pods
+NAME                               READY   STATUS    RESTARTS   AGE
+gnuraman-deploy-589ff4874f-c4tg5   1/1     Running   0          79s
+gnuraman-deploy-589ff4874f-lhgwp   1/1     Running   0          79s
+gnuraman-deploy-589ff4874f-s2qgh   1/1     Running   0          79s
+
+C:\Users\Robin\Desktop\raman>kubectl scale deployment gnuraman-deploy --replicas=5
+deployment.apps/gnuraman-deploy scaled
+
+C:\Users\Robin\Desktop\raman>kubectl get pods
+NAME                               READY   STATUS    RESTARTS   AGE
+gnuraman-deploy-589ff4874f-c4tg5   1/1     Running   0          4m4s
+gnuraman-deploy-589ff4874f-lhgwp   1/1     Running   0          4m4s
+gnuraman-deploy-589ff4874f-nfsr7   1/1     Running   0          5s
+gnuraman-deploy-589ff4874f-s2qgh   1/1     Running   0          4m4s
+gnuraman-deploy-589ff4874f-v9q5w   1/1     Running   0          5s
+
+C:\Users\Robin\Desktop\raman>ibmcloud ks workers --cluster mycluster-free
+OK
+ID                                                       Public IP       Private IP       Flavor   State    Status   Zone    Version
+kube-c97vejof07lhm51188v0-myclusterfr-default-000000a3   159.122.183.4   10.144.187.119   free     normal   Ready    mil01   1.22.8_1546
+
+C:\Users\Robin\Desktop\raman>kubectl get service
+NAME               TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
+gnuraman-service   NodePort    172.21.10.28   <none>        3000:32119/TCP   5m1s
+kubernetes         ClusterIP   172.21.0.1     <none>        443/TCP          8h
+
+C:\Users\Robin\Desktop\raman> now run on google public ip: 32119

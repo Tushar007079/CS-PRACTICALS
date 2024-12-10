@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloudant CORS Example</title>
+</head>
+<body>
+    <h1>Cloudant CORS Example</h1>
+    <button id="fetchDatabases">Fetch Databases</button>
+    <pre id="result"></pre>
+
+    <script>
+        document.getElementById('fetchDatabases').addEventListener('click', function() {
+            const url = 'https://0c327564-6042-41a7-916e-332518318d02-bluemix.cloudantnosqldb.appdomain.cloud/_all_dbs';
+            const username = 'apikey-v2-1rwrvdtqy58vcgv9tn1kpazxasnz2wmf0qg3tnm96jsi';
+            const password = '79a798a454654350e67116eb07328bcc';
+            const headers = new Headers();
+            headers.append('Authorization', 'Basic ' + btoa(username + ':' + password));
+
+            fetch(url, { method: 'GET', headers: headers })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+                })
+                .catch(error => {
+                    document.getElementById('result').textContent = 'Fetch error: ' + error.message;
+                });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tushar-deployment-prjkt
+spec:
+  selector:
+    matchLabels:
+      app: tushar-deployment-prjkt
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: tushar-deployment-prjkt
+    spec:
+      containers:
+      - name: nodecontainer
+        image: au.icr.io/tushar-nmspc/tusharprjkt
+        ports:
+        - containerPort: 3000
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "500m"
+          limits:
+            memory: "256Mi"
+            cpu: "1000m"

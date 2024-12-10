@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloudant API Example</title>
+</head>
+<body>
+    <h1>Cloudant API Example</h1>
+    <button id="replicateData">Replicate Data</button>
+    <pre id="result"></pre>
+
+    <script>
+        document.getElementById('replicateData').addEventListener('click', function() {
+            const apiKey = 'apikey-868b7b88ecae47299b2744276011aa31';
+            const apiPassword = 'edfe811c3ab991576d35cd29f8838c9b8adda124';
+            const sourceUrl = 'https://ed643cff-2d52-40c5-b33d-71ad7ff9e885-bluemix.cloudant.com/exam/_all_docs?include_docs=true';
+            const targetUrl = 'https://ed643cff-2d52-40c5-b33d-71ad7ff9e885-bluemix.cloudant.com/test_db';
+
+            const headers = new Headers();
+            headers.append('Authorization', 'Basic ' + btoa(apiKey + ':' + apiPassword));
+            headers.append('Content-Type', 'application/json');
+
+            fetch(sourceUrl, { method: 'GET', headers: headers })
+                .then(response => response.json())
+                .then(data => {
+                    const docs = data.rows.map(row => row.doc);
+                    docs.forEach(doc => {
+                        replicateDocument(doc, targetUrl, headers);
+                    });
+                })
+                .catch(error => {
+                    document.getElementById('result').textContent = 'Replication error: ' + error;
+                });
+        });
+
+        function replicateDocument(doc, targetUrl, headers) {
+            const docUrl = `${targetUrl}/${doc._id}`;
+
+            fetch(docUrl, { method: 'GET', headers: headers })
+                .then(response => {
+                    if (response.status === 404) {
+                        // Document does not exist, create it
+                        return fetch(targetUrl, {
+                            method: 'POST',
+                            headers: headers,
+                            body: JSON.stringify(doc)
+                        });
+                    } else {
+                        return response.json().then(existingDoc => {
+                            // Document exists, update it
+                            doc._rev = existingDoc._rev;
+                            return fetch(docUrl, {
+                                method: 'PUT',
+                                headers: headers,
+                                body: JSON.stringify(doc)
+                            });
+                        });
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        document.getElementById('result').textContent += `\nReplication success: ${doc._id}`;
+                    } else {
+                        document.getElementById('result').textContent += `\nReplication error: ${JSON.stringify(data)}`;
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('result').textContent += `\nReplication error: ${error.message}`;
+                });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+apiVersion: securityenforcement.admission.cloud.ibm.com/v1alpha1
+kind: ImagePolicy
+metadata:
+  name: my-image-policy
+spec:
+  rules:
+  - allow:
+      repositories:
+      - au.icr.io/tushar-nmspc/tusharprjkt

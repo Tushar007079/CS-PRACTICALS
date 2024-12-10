@@ -1,0 +1,2 @@
+{"name":"@cloudant/couchbackup","version":"2.10.1","mode":"full"}
+[{"_id":"5e662e943321da432febab3d35b69672","_rev":"1-214d45ced07e8ba5984d981d891e0426","_revisions":{"ids":["214d45ced07e8ba5984d981d891e0426"],"start":1},"title":"harry potter","author":"jk rowlling","genre":"magic","year":1960},{"_id":"7cde5188e47fc9ee86c619bb2e09ed6b","_rev":"1-423b5657329de5f12f6079ba8886b062","_revisions":{"ids":["423b5657329de5f12f6079ba8886b062"],"start":1},"title":"To Kill a Mockingbird","author":"Harper Lee","genre":"Fiction","year":1960}]

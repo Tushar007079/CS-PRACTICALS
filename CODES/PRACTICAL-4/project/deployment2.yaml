@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tushar-deployment
+spec:
+  selector:
+    matchLabels:
+      app: tushar-app  # This should match the label in the pod template
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: tushar-app  # Ensure this label matches the selector
+    spec:
+      containers:
+        - name: tushar007
+          image: au.icr.io/tushar007/newimagetushar
+          ports:
+          - containerPort: 8080

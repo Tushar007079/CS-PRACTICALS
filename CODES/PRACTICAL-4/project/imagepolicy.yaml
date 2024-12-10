@@ -1,0 +1,36 @@
+apiVersion: portieris.cloud.ibm.com/v1
+kind: ImagePolicy
+metadata:
+  creationTimestamp: '2024-10-02T15:17:15Z'
+  generation: 2
+  managedFields:
+    - apiVersion: portieris.cloud.ibm.com/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:spec:
+          .: {}
+          f:repositories: {}
+      manager: dashboard
+      operation: Update
+      time: '2024-10-02T17:21:07Z'
+  name: ibmcloud-default-cluster-image-policy-tushar
+  namespace: default
+  resourceVersion: '4337075'
+  uid: a4b9982e-a7ac-4a49-9877-85abd4b18e47
+spec:
+  repositories:
+    - name: docker.io/*
+      policy: null
+    - name: quay.io/*
+      policy: null
+    - name: gcr.io/*
+      policy: null
+    - name: '*azurecr.io/*'
+      policy: null
+    - name: '*amazonaws.com/*'
+      policy: null
+    - name: au.icr.io *
+      policy:
+        vulnerability:
+          ICCRVA:
+            enabled: true

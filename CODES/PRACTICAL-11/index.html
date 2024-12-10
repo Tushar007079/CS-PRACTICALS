@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Neon Themed Verification Email</title>
+</head>
+<body style="background-color: #1a1a1a; color: #00ffcc; font-family: Gotham, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 16px;">
+    <span style="text-align: center;"></span>
+    <table width="100%" border="0" align="center" cellpadding="10" cellspacing="0" style="font-family: Gotham, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 16px; color: #00ffcc;">
+        <tbody>
+            <tr>
+                <td align="center" valign="middle" bgcolor="#111111">
+                    <img src="%{display.logo}" style="object-fit: contain;" height="77" alt="logo">
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    <strong style="font-size: 20px;">Hi %{user.firstName},<br><br>Thanks for signing-up!</strong><br><br>
+                    Please verify your email address by clicking the button below.<br><br>
+                    <a href="%{verify.link}" style="text-decoration: none;">
+                        <span style="background-color: #00ffcc; padding: 10px 20px; color: #1a1a1a; font-weight: bold; border-radius: 5px; display: inline-block; cursor: pointer;">
+                            Verify
+                        </span>
+                    </a>
+                    <br><br>
+                    <span style="font-size: 14px; color: #cccccc;">
+                        Note: The link is only active for %{linkExpiration.hours} hours. If you are unable to use the verify button, click the link below or copy and paste it into the address bar of your web browser.
+                    </span>
+                    <br><br>
+                    <a href="%{verify.link}" style="font-size: 12px; color: #00ffcc;">%{verify.link}</a>
+                    <br><br>
+                    If you didn't sign-up with this address, you can ignore this email.<br><br>
+                    Thanks!<br><br>
+                </td>
+            </tr>
+            <tr>
+                <td bgcolor="#111111" style="height: 50px;"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
